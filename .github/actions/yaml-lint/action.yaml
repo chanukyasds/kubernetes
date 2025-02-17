@@ -1,0 +1,28 @@
+name: Yaml Linter
+author: Chanukya SDS
+description: Linting YAML for repos
+
+inputs:
+  repo_dir:
+    description: repository directory to run linter
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Update apt
+      run: |
+        sudo apt update
+      shell: bash
+
+    - name: Install Yaml Lint
+      run: |
+        sudo apt install -y yamllint
+      shell: bash
+
+    - name: Run Yaml Lint
+      run: |
+        find ${{ inputs.repo_dir }}/ \
+        -type f \( -name "*.yaml" -o -name "*.yml" \) -exec yamllint {} +
+      shell: bash

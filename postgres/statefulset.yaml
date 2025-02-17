@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-server
+  labels:
+    sfs-label: postgres
+spec:
+  selector:
+    matchLabels:
+      database: postgres
+
+  serviceName: postgres-service
+  replicas: 1
+
+  template:
+    metadata:
+      labels:
+        database: postgres # this will be look up by service and selector
+
+    spec:
+      nodeName: worker-vm1
+      containers:
+        - name: postgres
+          image: postgres:latest
+
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: PG_PASSWORD

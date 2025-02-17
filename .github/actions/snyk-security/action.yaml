@@ -1,0 +1,16 @@
+name: Security Action
+author: Chanukya SDS
+description: Security scanning with snyk
+
+inputs:
+  snyk_token:
+    description: snyk api token
+    required: true
+    type: string
+
+runs:
+  using: "docker"
+  image: "docker://snyk/snyk-cli:latest"
+  env:
+    SNYK_TOKEN: ${{ inputs.snyk_token }}
+  run: snyk test
