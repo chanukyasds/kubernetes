@@ -97,6 +97,6 @@ jobs:
         run: |
           for file in ${CHD_FILES}; do
             [[ "$file" == *".github/"* ]] && continue
-            echo "Running KUBECTL dry-run on $file"
+            echo "Running KUBECTL apply on $file"
             kubectl apply -f "$file" || true
           done

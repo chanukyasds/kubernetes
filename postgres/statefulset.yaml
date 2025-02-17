@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       labels:
-        database: postgres # this will be look up by service and selector
+        database: postgres # this will be look up by service and selector in manifests
 
     spec:
       nodeName: worker-vm1
